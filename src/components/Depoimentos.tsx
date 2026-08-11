@@ -1,4 +1,7 @@
 import { RevealItem, RevealSection } from "./RevealSection";
+import { Sticker } from "./Sticker";
+import stickerBest from "../assets/stickers/sticker-the-best.png";
+import { ZigzagPattern } from "./ZigzagPattern";
 
 const DEPOIMENTOS = [
   {
@@ -17,10 +20,18 @@ const DEPOIMENTOS = [
 
 export function Depoimentos() {
   return (
-    <RevealSection className="relative overflow-hidden bg-tinta py-24 md:py-32">
+    <RevealSection className="relative overflow-hidden bg-bordo-escuro py-24 md:py-32">
+      <ZigzagPattern tone="light" />
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-bordo/25 blur-[110px]" />
       </div>
+      <Sticker
+        src={stickerBest}
+        width={130}
+        rotate={-10}
+        delay={0.8}
+        className="absolute left-6 top-10 hidden opacity-90 lg:block lg:w-40"
+      />
 
       <div className="relative mx-auto max-w-6xl px-6">
         <RevealItem className="mx-auto max-w-2xl text-center">

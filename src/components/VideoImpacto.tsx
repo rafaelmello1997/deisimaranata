@@ -2,7 +2,7 @@ import { RevealItem, RevealSection } from "./RevealSection";
 
 export function VideoImpacto() {
   return (
-    <RevealSection className="relative overflow-hidden bg-bordo py-24 md:py-32">
+    <RevealSection className="relative overflow-hidden bg-tinta py-24 md:py-32">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-luz-amarela/15 blur-[110px]" />
       </div>

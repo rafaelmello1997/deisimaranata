@@ -1,5 +1,4 @@
 import { RevealSection, RevealItem } from "./RevealSection";
-import foto from "../assets/images/foto-oficial-deisi.png";
 
 // Galeria completa (banco de fotos "Banco de fotos para CARDS" no Drive)
 // entra aqui assim que o download das imagens for aprovado e feito.
@@ -37,9 +36,9 @@ export function Galeria() {
           <div className="absolute -inset-6 rounded-[2.5rem] bg-amarelo/10 blur-2xl" />
           <div className="relative overflow-hidden rounded-[2rem] border border-branco/10 bg-tinta/40">
             <img
-              src={foto}
-              alt="Deisi Maranata"
-              className="h-full w-full object-cover object-top"
+              src="/assets/projetos/gurias-incriveis-2.jpg"
+              alt="Deisi Maranata com as Gurias Incríveis"
+              className="h-full w-full object-cover"
               draggable={false}
             />
           </div>

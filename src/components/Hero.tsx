@@ -1,6 +1,10 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import foto from "../assets/images/foto-oficial-deisi.png";
+import logo from "../assets/images/logo-deisi-sem-numero.png";
+import stickerEuToCom from "../assets/stickers/sticker-eu-to-com-deisi.png";
+import stickerJuntos from "../assets/stickers/sticker-juntos-pelo-rs.png";
+import { Sticker } from "./Sticker";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -53,67 +57,109 @@ export function Hero() {
         }}
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-none flex-col items-center px-6 pt-14 text-center sm:pt-16">
-        <motion.div
-          style={{ y: contentY, opacity: contentOpacity }}
-          className="flex flex-col items-center"
-        >
-          <motion.span
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="inline-flex items-center gap-2 rounded-full border border-amarelo/40 bg-branco/5 px-4 py-1 text-[9px] font-semibold uppercase tracking-[0.24em] text-amarelo backdrop-blur-sm sm:text-[10px]"
+      {/* nome repetido em contorno, estatico, preenchendo toda a section, num rosa bem escuro */}
+      <div className="pointer-events-none absolute inset-0 z-[1] flex select-none flex-col justify-center gap-1 overflow-hidden opacity-70 sm:gap-2">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div
+            key={i}
+            className="flex w-max shrink-0 whitespace-nowrap"
+            style={{ marginLeft: i % 2 === 0 ? "-6vw" : "-1vw" }}
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-amarelo" />
-            Pré-candidata a Deputada Estadual
-          </motion.span>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-3 font-display text-[clamp(2.25rem,7.5vw,4.25rem)] font-extrabold uppercase leading-[0.86] tracking-tight text-branco"
-          >
-            Deisi
-            <br />
-            <span className="text-amarelo">Maranata</span>
-          </motion.h1>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.45 }}
-            className="mt-4 flex flex-wrap items-center justify-center gap-3"
-          >
-            <a
-              href="#projetos"
-              className="rounded-full bg-amarelo px-6 py-2.5 text-xs font-bold uppercase tracking-[0.1em] text-tinta shadow-[0_8px_30px_rgba(255,204,0,0.35)] transition-transform hover:scale-105 sm:px-7 sm:py-3 sm:text-sm"
-            >
-              Conheça a Deisi
-            </a>
-            <span className="rounded-full border border-branco/25 px-6 py-2.5 text-xs font-bold uppercase tracking-[0.1em] text-branco/90 sm:px-7 sm:py-3 sm:text-sm">
-              Nº 20.700
-            </span>
-          </motion.div>
-        </motion.div>
+            {Array.from({ length: 6 }).map((_, k) => (
+              <span
+                key={k}
+                className="font-display px-6 text-[16vw] font-extrabold uppercase leading-[0.9] tracking-tight lg:text-[9vw]"
+                style={{ WebkitTextStroke: "1.5px var(--color-bordo-escuro)", color: "transparent" }}
+              >
+                Deisi Maranata
+              </span>
+            ))}
+          </div>
+        ))}
       </div>
 
-      {/* foto bem grande centralizada, com leve parallax, dominando o espaco restante da tela */}
-      <motion.div
-        style={{ y: photoY, scale: photoScale }}
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 mx-auto flex min-h-0 w-full max-w-4xl flex-1 items-end justify-center overflow-hidden px-4 pb-10 sm:pb-12"
-      >
-        <div className="absolute bottom-10 h-[75%] w-[90%] rounded-full bg-amarelo/20 blur-[70px] sm:bottom-12" />
-        <img
-          src={foto}
-          alt="Deisi Maranata"
-          className="relative h-full w-auto max-w-full select-none object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)]"
-          draggable={false}
-        />
-      </motion.div>
+      <Sticker
+        src={stickerJuntos}
+        width={78}
+        rotate={10}
+        delay={1}
+        className="absolute right-4 top-20 z-10 hidden opacity-80 sm:right-8 sm:top-24 sm:block sm:w-24"
+      />
+
+      <div className="relative z-10 flex min-h-0 flex-1 flex-col lg:flex-row lg:items-stretch">
+        {/* foto na lateral, preenchendo toda a altura da section */}
+        <motion.div
+          style={{ y: photoY, scale: photoScale }}
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="relative order-2 flex min-h-0 flex-1 items-end justify-center overflow-hidden px-4 pb-8 sm:pb-10 lg:order-1 lg:items-stretch lg:pb-0 lg:pl-6"
+        >
+          <div className="absolute bottom-8 h-[70%] w-[90%] rounded-full bg-amarelo/15 blur-[70px] lg:bottom-0 lg:left-1/2 lg:h-[80%] lg:w-[60%] lg:-translate-x-1/2" />
+          <img
+            src={foto}
+            alt="Deisi Maranata"
+            className="relative h-full w-auto max-w-full select-none object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)] lg:object-bottom"
+            draggable={false}
+          />
+          {/* sticker na frente da Deisi, centralizado na parte inferior da foto */}
+          <Sticker
+            src={stickerEuToCom}
+            width={420}
+            rotate={-4}
+            delay={0.5}
+            className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 opacity-95 sm:w-[620px] lg:bottom-2 lg:w-[760px]"
+          />
+        </motion.div>
+
+        {/* texto do outro lado */}
+        <div className="relative order-1 mx-auto flex w-full max-w-xl flex-none flex-col items-center px-6 pt-14 text-center sm:pt-16 lg:order-2 lg:my-auto lg:max-w-2xl lg:flex-1 lg:items-start lg:px-4 lg:pr-12 lg:pt-0 lg:text-left">
+          <motion.div
+            style={{ y: contentY, opacity: contentOpacity }}
+            className="flex flex-col items-center lg:items-start"
+          >
+            <motion.span
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="inline-flex items-center gap-2 rounded-full border border-amarelo/40 bg-branco/5 px-4 py-1 text-[9px] font-semibold uppercase tracking-[0.24em] text-amarelo backdrop-blur-sm sm:text-[10px]"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-amarelo" />
+              Candidata a Deputada Estadual
+            </motion.span>
+
+            <motion.img
+              src={logo}
+              alt="Deisi Maranata"
+              draggable={false}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-3 h-auto w-full max-w-[260px] select-none sm:max-w-sm lg:max-w-xl"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.45 }}
+              className="mt-4 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
+            >
+              <a
+                href="#apoiar"
+                className="rounded-full bg-amarelo px-8 py-4 text-sm font-bold uppercase tracking-[0.1em] text-tinta shadow-[0_8px_30px_rgba(255,204,0,0.35)] transition-transform hover:scale-105 sm:px-10 sm:py-5 sm:text-base"
+              >
+                Quero apoiar
+              </a>
+              <a
+                href="#quem-e"
+                className="rounded-full border border-branco/25 px-8 py-4 text-sm font-bold uppercase tracking-[0.1em] text-branco/90 transition-colors hover:border-amarelo/50 sm:px-10 sm:py-5 sm:text-base"
+              >
+                Conheça a Deisi
+              </a>
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
 
       {/* indicador de scroll */}
       <motion.div

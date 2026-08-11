@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import logo from "../assets/images/logo-deisi-vertical.png";
+import logo from "../assets/images/logo-deisi-sem-numero.png";
 
 const NAV = [
-  { href: "#inicio", label: "Início" },
-  { href: "#marca", label: "Valores" },
+  { href: "#quem-e", label: "Quem é" },
+  { href: "#o-elo", label: "O Elo" },
+  { href: "#bandeiras", label: "Bandeiras" },
   { href: "#projetos", label: "Projetos" },
-  { href: "#galeria", label: "Galeria" },
   { href: "#contato", label: "Contato" },
 ];
 
@@ -33,7 +33,7 @@ export function Header() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
         <a href="#inicio" className="flex items-center gap-2">
-          <img src={logo} alt="Deisi Maranata" className="h-10 w-auto drop-shadow-md" />
+          <img src={logo} alt="Deisi Maranata" className="h-9 w-auto drop-shadow-md sm:h-11" />
         </a>
         <nav className="hidden items-center gap-8 md:flex">
           {NAV.map((item) => (
@@ -47,10 +47,10 @@ export function Header() {
           ))}
         </nav>
         <a
-          href="#contato"
+          href="#apoiar"
           className="rounded-full bg-amarelo px-5 py-2 text-xs font-bold uppercase tracking-[0.14em] text-tinta transition-transform hover:scale-105"
         >
-          20700
+          Quero apoiar
         </a>
       </div>
     </motion.header>
