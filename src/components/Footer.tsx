@@ -4,7 +4,7 @@ import stickerJuntos from "../assets/stickers/sticker-juntos-pelo-rs.png";
 
 export function Footer() {
   return (
-    <footer id="contato" className="relative overflow-hidden bg-tinta py-16">
+    <footer id="contato" className="relative overflow-hidden bg-bordo py-16">
       <Sticker
         src={stickerJuntos}
         width={120}

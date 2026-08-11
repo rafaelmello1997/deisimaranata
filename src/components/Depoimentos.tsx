@@ -20,10 +20,10 @@ const DEPOIMENTOS = [
 
 export function Depoimentos() {
   return (
-    <RevealSection className="relative overflow-hidden bg-bordo-escuro py-24 md:py-32">
+    <RevealSection className="relative overflow-hidden bg-bordo py-24 md:py-32">
       <ZigzagPattern tone="light" />
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-bordo/25 blur-[110px]" />
+        <div className="absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-bordo-escuro/40 blur-[110px]" />
       </div>
       <Sticker
         src={stickerBest}
@@ -59,9 +59,9 @@ export function Depoimentos() {
                   Seu navegador não suporta reprodução de vídeo.
                 </video>
               </div>
-              <p className="mt-3 text-center text-xs font-semibold uppercase tracking-[0.16em] text-branco/60">
+              <span className="font-display mx-auto mt-4 block w-fit rounded-full bg-amarelo px-5 py-2 text-center text-sm font-extrabold uppercase tracking-wide text-tinta shadow-[0_8px_20px_rgba(0,0,0,0.25)]">
                 {d.projeto}
-              </p>
+              </span>
             </RevealItem>
           ))}
         </div>

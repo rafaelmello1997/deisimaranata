@@ -4,12 +4,12 @@ import stickerEuToCom from "../assets/stickers/sticker-eu-to-com-deisi.png";
 
 export function QuemE() {
   return (
-    <RevealSection id="quem-e" className="relative overflow-hidden bg-bordo-escuro py-24 md:py-32">
+    <RevealSection id="quem-e" className="relative overflow-hidden bg-luz-amarela py-24 md:py-32">
       <div
-        className="absolute inset-0 opacity-[0.06]"
+        className="absolute inset-0 opacity-[0.05]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+            "linear-gradient(rgba(32,4,16,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(32,4,16,0.6) 1px, transparent 1px)",
           backgroundSize: "48px 48px",
         }}
       />
@@ -23,8 +23,8 @@ export function QuemE() {
 
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-start gap-12 px-6 md:grid-cols-[0.85fr_1.15fr]">
         <RevealItem className="relative mx-auto w-full max-w-sm md:sticky md:top-28">
-          <div className="absolute -inset-5 rounded-[2.5rem] bg-amarelo/15 blur-2xl" />
-          <div className="relative overflow-hidden rounded-[2rem] border border-branco/15">
+          <div className="absolute -inset-5 rounded-[2.5rem] bg-bordo/10 blur-2xl" />
+          <div className="relative overflow-hidden rounded-[2rem] border border-bordo/15">
             <img
               src="/assets/projetos/casa-solidaria-lavanderia-3.jpg"
               alt="Deisi Maranata acolhendo uma beneficiária da Casa Solidária"
@@ -35,15 +35,15 @@ export function QuemE() {
 
         <div>
           <RevealItem>
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-luz-amarela">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-bordo">
               Quem é
             </span>
-            <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-branco md:text-5xl">
+            <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-tinta md:text-5xl">
               Deisi Maranata
             </h2>
           </RevealItem>
 
-          <RevealItem delay={0.1} className="mt-6 space-y-4 text-[15px] leading-relaxed text-branco/85 md:text-base">
+          <RevealItem delay={0.1} className="mt-6 space-y-4 text-[15px] leading-relaxed text-tinta/80 md:text-base">
             <p>
               Antes de qualquer título, sou esposa do Marcelo Maranata, mãe,
               advogada e cristã. Minha fé é o que me sustenta e minha família

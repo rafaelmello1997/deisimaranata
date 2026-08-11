@@ -31,17 +31,17 @@ const BANDEIRAS = [
 
 export function Bandeiras() {
   return (
-    <RevealSection id="bandeiras" className="relative overflow-hidden bg-bordo-escuro py-24 md:py-32">
-      <ZigzagPattern tone="light" />
+    <RevealSection id="bandeiras" className="relative overflow-hidden bg-branco py-24 md:py-32">
+      <ZigzagPattern tone="dark" />
       <div className="relative mx-auto max-w-6xl px-6">
         <RevealItem className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-amarelo">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-bordo">
             O que defendo
           </span>
-          <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-branco md:text-5xl">
+          <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-tinta md:text-5xl">
             Bandeiras de luta
           </h2>
-          <p className="mt-4 text-sm text-branco/60 md:text-base">
+          <p className="mt-4 text-sm text-tinta/65 md:text-base">
             Compromissos claros pra Assembleia Legislativa, pautados pela
             emancipação do cidadão e pela eficiência do Estado.
           </p>
@@ -54,15 +54,15 @@ export function Bandeiras() {
               delay={i * 0.08}
               className={i === 4 ? "md:col-span-2" : undefined}
             >
-              <div className="group flex h-full gap-5 rounded-2xl border border-branco/10 bg-branco/[0.03] p-6 transition-colors hover:border-amarelo/40 md:p-7">
-                <span className="font-display shrink-0 text-3xl font-extrabold text-amarelo/70 md:text-4xl">
+              <div className="group flex h-full gap-5 rounded-2xl border border-tinta/10 bg-bordo/[0.045] p-6 transition-colors hover:border-bordo/40 md:p-7">
+                <span className="font-display shrink-0 text-3xl font-extrabold text-bordo/70 md:text-4xl">
                   {b.n}
                 </span>
                 <div>
-                  <h3 className="font-display text-lg font-bold uppercase tracking-wide text-branco">
+                  <h3 className="font-display text-lg font-bold uppercase tracking-wide text-tinta">
                     {b.titulo}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-branco/65">{b.texto}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-tinta/70">{b.texto}</p>
                 </div>
               </div>
             </RevealItem>

@@ -263,7 +263,7 @@ export function OElo() {
     <>
       <section
         id="o-elo"
-        className="relative isolate h-[100svh] min-h-[680px] overflow-hidden bg-tinta"
+        className="relative isolate h-[100svh] min-h-[680px] overflow-hidden bg-bordo"
         style={
           {
             "--corner": `${P.corner}px`,
@@ -274,7 +274,7 @@ export function OElo() {
       >
         <style>{`
           .elo-stage { position:absolute; inset:0; overflow:hidden;
-            background: radial-gradient(130% 100% at 72% 62%, #3a0620 0%, #200410 62%, #14020a 100%);
+            background: radial-gradient(130% 100% at 72% 62%, #d6006a 0%, #BF0050 55%, #7A0034 100%);
             cursor: grab; touch-action: pan-y; user-select:none; outline:none; }
           .elo-stage.-drag { cursor: grabbing; }
           .elo-belt { position:absolute; inset:0; transform-style:preserve-3d;
@@ -284,28 +284,28 @@ export function OElo() {
             margin-left:calc(var(--cw,230px) / -2); margin-top:calc(var(--ch,308px) / -2);
             transform-style:preserve-3d; will-change:transform,opacity; }
           .elo-card__inner { position:absolute; inset:0; border-radius:var(--corner,14px); overflow:hidden;
-            background:#2a0616;
-            box-shadow: 0 40px 80px -24px rgba(0,0,0,.72), 0 8px 24px -10px rgba(0,0,0,.6);
+            background:#7A0034;
+            box-shadow: 0 40px 80px -24px rgba(74,0,31,.72), 0 8px 24px -10px rgba(74,0,31,.6);
             transition: transform .34s cubic-bezier(.22,.61,.36,1), box-shadow .34s ease; }
           .elo-card.-active .elo-card__inner { transform: scale(var(--lift,1.035));
-            box-shadow: 0 52px 100px -24px rgba(0,0,0,.8), 0 10px 30px -10px rgba(0,0,0,.7); }
+            box-shadow: 0 52px 100px -24px rgba(74,0,31,.8), 0 10px 30px -10px rgba(74,0,31,.7); }
           .elo-card__inner img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
           .elo-card__scrim { position:absolute; inset:0; pointer-events:none; opacity:var(--scrim,1);
-            background: linear-gradient(to top, rgba(20,2,10,.94) 0%, rgba(20,2,10,.55) 24%, rgba(20,2,10,.08) 46%, rgba(20,2,10,0) 62%); }
+            background: linear-gradient(to top, rgba(74,0,31,.94) 0%, rgba(74,0,31,.55) 24%, rgba(74,0,31,.08) 46%, rgba(74,0,31,0) 62%); }
           .elo-card__foot { position:absolute; left:16px; right:14px; bottom:15px; z-index:2; }
           .elo-card__meta { margin:0 0 4px; font-family:'TT Chocolates', sans-serif; font-size:10px; font-weight:600; letter-spacing:.16em;
             text-transform:uppercase; color:var(--color-amarelo, #FFCC00); }
           .elo-card__title { margin:0; font-family:'TT Chocolates', sans-serif; font-weight:600;
             font-size:16px; line-height:1.15; letter-spacing:-.005em; color:#fff;
-            text-shadow:0 2px 14px rgba(0,0,0,.55); }
+            text-shadow:0 2px 14px rgba(74,0,31,.55); }
           .elo-card__hint { position:absolute; top:12px; right:12px; z-index:2;
             font-family:'TT Chocolates', sans-serif; font-size:9px; font-weight:600; letter-spacing:.12em; text-transform:uppercase;
-            color:#fff; background:rgba(20,2,10,.55); border:1px solid rgba(255,255,255,.25); border-radius:999px; padding:4px 9px;
+            color:#fff; background:rgba(74,0,31,.55); border:1px solid rgba(255,255,255,.25); border-radius:999px; padding:4px 9px;
             opacity:0; transition:opacity .25s ease; }
           .elo-card.-active .elo-card__hint { opacity:1; }
           .elo-vignette { position:absolute; inset:0; z-index:2; pointer-events:none;
-            background: linear-gradient(to right, #14020a 0%, rgba(20,2,10,.55) 12%, rgba(20,2,10,0) 34%),
-                        linear-gradient(to bottom, rgba(20,2,10,0) 62%, rgba(20,2,10,.5) 100%); }
+            background: linear-gradient(to right, #4a001f 0%, rgba(74,0,31,.55) 12%, rgba(74,0,31,0) 34%),
+                        linear-gradient(to bottom, rgba(74,0,31,0) 62%, rgba(74,0,31,.5) 100%); }
           @media (prefers-reduced-motion: reduce) { .elo-card__inner { transition:none; } }
         `}</style>
 
