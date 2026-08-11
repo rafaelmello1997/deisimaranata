@@ -21,8 +21,6 @@ const PROJETOS = [
 
 const GRADIENTES = [
   "from-bordo to-bordo-escuro",
-  "from-amarelo to-bordo",
-  "from-luz-amarela to-amarelo",
   "from-bordo-escuro to-tinta",
 ];
 
@@ -30,8 +28,8 @@ export function Projetos() {
   const [ativo, setAtivo] = useState<string | null>(null);
 
   return (
-    <RevealSection id="projetos" className="relative overflow-hidden bg-luz-amarela py-24 md:py-32">
-      <ZigzagPattern tone="dark" />
+    <RevealSection id="projetos" className="relative overflow-hidden bg-bordo py-24 md:py-32">
+      <ZigzagPattern tone="light" />
       <Sticker
         src={stickerBest}
         width={160}
@@ -42,16 +40,16 @@ export function Projetos() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
           <RevealItem>
-            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-bordo">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-luz-amarela">
               Realizações
             </span>
-            <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-tinta md:text-5xl">
+            <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-branco md:text-5xl">
               Projetos que já
               <br className="hidden md:block" /> transformam vidas
             </h2>
           </RevealItem>
           <RevealItem delay={0.1}>
-            <p className="max-w-sm text-sm text-tinta/60">
+            <p className="max-w-sm text-sm text-branco/60">
               Iniciativas do gabinete que saem do papel e chegam na vida das
               famílias, das gurias e dos empreendedores da comunidade. Clique
               num card pra ver todas as fotos.
@@ -66,7 +64,7 @@ export function Projetos() {
                 type="button"
                 disabled={!p.key}
                 onClick={() => p.key && setAtivo(p.key)}
-                className={`group relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-tinta/10 text-left ${
+                className={`group relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-branco/10 text-left ${
                   p.key ? "cursor-pointer" : "cursor-default"
                 }`}
               >

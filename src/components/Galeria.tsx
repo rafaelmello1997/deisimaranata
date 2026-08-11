@@ -4,7 +4,7 @@ import { RevealSection, RevealItem } from "./RevealSection";
 // entra aqui assim que o download das imagens for aprovado e feito.
 export function Galeria() {
   return (
-    <RevealSection id="galeria" className="relative overflow-hidden bg-luz-amarela py-24 md:py-32">
+    <RevealSection id="galeria" className="relative overflow-hidden bg-branco py-24 md:py-32">
       <div
         className="absolute inset-0 opacity-[0.05]"
         style={{
@@ -27,7 +27,7 @@ export function Galeria() {
             A galeria completa com os registros do dia a dia da Deisi com a
             comunidade está sendo preparada e chega em breve nesta página.
           </p>
-          <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-bordo/30 bg-branco/40 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-bordo">
+          <span className="mt-6 inline-flex items-center gap-2 rounded-full border border-bordo/30 bg-bordo/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-bordo">
             Galeria em construção
           </span>
         </RevealItem>

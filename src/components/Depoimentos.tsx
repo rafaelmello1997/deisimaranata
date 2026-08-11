@@ -20,10 +20,10 @@ const DEPOIMENTOS = [
 
 export function Depoimentos() {
   return (
-    <RevealSection className="relative overflow-hidden bg-bordo py-24 md:py-32">
-      <ZigzagPattern tone="light" />
+    <RevealSection className="relative overflow-hidden bg-branco py-24 md:py-32">
+      <ZigzagPattern tone="dark" />
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-bordo-escuro/40 blur-[110px]" />
+        <div className="absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-bordo/10 blur-[110px]" />
       </div>
       <Sticker
         src={stickerBest}
@@ -35,10 +35,10 @@ export function Depoimentos() {
 
       <div className="relative mx-auto max-w-6xl px-6">
         <RevealItem className="mx-auto max-w-2xl text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-amarelo">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-bordo">
             Quem viveu, conta
           </span>
-          <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-branco md:text-5xl">
+          <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-tinta md:text-5xl">
             Depoimentos de quem
             <br className="hidden md:block" /> foi impactado
           </h2>
@@ -47,8 +47,8 @@ export function Depoimentos() {
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
           {DEPOIMENTOS.map((d, i) => (
             <RevealItem key={d.src} delay={i * 0.1} className="relative mx-auto w-full max-w-xs">
-              <div className="absolute -inset-4 rounded-[2.25rem] bg-amarelo/10 blur-2xl" />
-              <div className="relative overflow-hidden rounded-[1.75rem] border border-branco/15 bg-bordo-escuro shadow-[0_24px_60px_rgba(0,0,0,0.4)]">
+              <div className="absolute -inset-4 rounded-[2.25rem] bg-bordo/10 blur-2xl" />
+              <div className="relative overflow-hidden rounded-[1.75rem] border border-bordo/15 bg-bordo-escuro shadow-[0_24px_60px_rgba(0,0,0,0.4)]">
                 <video
                   src={d.src}
                   controls
