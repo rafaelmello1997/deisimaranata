@@ -1,0 +1,60 @@
+import { RevealItem, RevealSection } from "./RevealSection";
+
+const DEPOIMENTOS = [
+  {
+    projeto: "Casa solidária",
+    src: "/videos/depoimento-casa-solidaria.mp4",
+  },
+  {
+    projeto: "Lavanderia solidária",
+    src: "/videos/depoimento-lavanderia-solidaria.mp4",
+  },
+  {
+    projeto: "Gurias incríveis",
+    src: "/videos/depoimento-gurias-incriveis.mp4",
+  },
+];
+
+export function Depoimentos() {
+  return (
+    <RevealSection className="relative overflow-hidden bg-tinta py-24 md:py-32">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-bordo/25 blur-[110px]" />
+      </div>
+
+      <div className="relative mx-auto max-w-6xl px-6">
+        <RevealItem className="mx-auto max-w-2xl text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-amarelo">
+            Quem viveu, conta
+          </span>
+          <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-branco md:text-5xl">
+            Depoimentos de quem
+            <br className="hidden md:block" /> foi impactado
+          </h2>
+        </RevealItem>
+
+        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {DEPOIMENTOS.map((d, i) => (
+            <RevealItem key={d.src} delay={i * 0.1} className="relative mx-auto w-full max-w-xs">
+              <div className="absolute -inset-4 rounded-[2.25rem] bg-amarelo/10 blur-2xl" />
+              <div className="relative overflow-hidden rounded-[1.75rem] border border-branco/15 bg-bordo-escuro shadow-[0_24px_60px_rgba(0,0,0,0.4)]">
+                <video
+                  src={d.src}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  className="aspect-[9/16] w-full bg-tinta object-cover"
+                >
+                  Seu navegador não suporta reprodução de vídeo.
+                </video>
+              </div>
+              <p className="mt-3 text-center text-xs font-semibold uppercase tracking-[0.16em] text-branco/60">
+                {d.projeto}
+              </p>
+            </RevealItem>
+          ))}
+        </div>
+      </div>
+    </RevealSection>
+  );
+}

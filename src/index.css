@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "TT Chocolates";
+  src: url("./assets/fonts/TT Chocolates Trial Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TT Chocolates";
+  src: url("./assets/fonts/TT Chocolates Trial Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TT Chocolates";
+  src: url("./assets/fonts/TT Chocolates Trial Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TT Chocolates";
+  src: url("./assets/fonts/TT Chocolates Trial DemiBold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TT Chocolates";
+  src: url("./assets/fonts/TT Chocolates Trial Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TT Chocolates";
+  src: url("./assets/fonts/TT Chocolates Trial ExtraBold.otf") format("opentype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* Paleta oficial Deisi */
+  --color-bordo: #BF0050;
+  --color-bordo-escuro: #7A0034;
+  --color-amarelo: #FFCC00;
+  --color-luz-amarela: #FFFF66;
+  --color-branco: #FFFFFF;
+  --color-tinta: #200410;
+
+  --font-display: "TT Chocolates", "Segoe UI", sans-serif;
+  --font-body: "TT Chocolates", "Segoe UI", sans-serif;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-bounce-slow: bounce-slow 2.2s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(10px); opacity: 1; }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--color-tinta);
+  color: var(--color-branco);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-amarelo);
+  color: var(--color-tinta);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-tinta);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-bordo);
+  border-radius: 999px;
+}
