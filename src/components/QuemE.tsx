@@ -64,8 +64,8 @@ export function QuemE() {
               Em 2022, milhares de gaúchos depositaram sua confiança em mim,
               tornando-me a mulher mais votada do meu partido. Agora, volto
               com mais experiência, com resultados comprovados e com a
-              coragem necessária para ocupar a cadeira que é sua por
-              direito.
+              coragem necessária para ocupar a cadeira que está vazia em
+              termos de representação.
             </p>
             <p>
               Minha maior escola foi a maternidade. Enfrentar o desafio de

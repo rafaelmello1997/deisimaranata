@@ -25,7 +25,7 @@ const BANDEIRAS = [
   {
     n: "05",
     titulo: "Fortalecimento dos Municípios",
-    texto: "Menos Brasília e menos Porto Alegre, mais recursos direto onde a vida acontece: nas cidades do interior.",
+    texto: "Menos Brasília e mais recursos onde a vida acontece, nas cidades.",
   },
 ];
 
