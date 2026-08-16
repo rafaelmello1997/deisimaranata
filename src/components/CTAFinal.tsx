@@ -2,14 +2,36 @@ import { type FormEvent, useState } from "react";
 import { RevealItem, RevealSection } from "./RevealSection";
 import { ZigzagPattern } from "./ZigzagPattern";
 
-// TODO: ligar o submit num backend/webhook real (Formspree, edge function etc.)
-// e trocar o href do "Zap da Deisi" pelo numero real (https://wa.me/55...).
+// Zap da Deisi -- numero oficial da campanha.
+const WHATSAPP_NUMERO = "5551993441838";
+const WHATSAPP_LINK_DIRETO = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(
+  "Olá! Vim através do site da Deisi Maranata e quero saber mais.",
+)}`;
+
 export function CTAFinal() {
   const [enviado, setEnviado] = useState(false);
+  const [linkVoluntario, setLinkVoluntario] = useState(WHATSAPP_LINK_DIRETO);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const dados = new FormData(e.currentTarget);
+    const nome = String(dados.get("nome") || "").trim();
+    const whatsapp = String(dados.get("whatsapp") || "").trim();
+    const cidade = String(dados.get("cidade") || "").trim();
+
+    const mensagem = [
+      "Olá, Deisi! Quero ser voluntária(o) na campanha.",
+      `Nome: ${nome}`,
+      whatsapp && `WhatsApp: ${whatsapp}`,
+      cidade && `Cidade: ${cidade}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const link = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
+    setLinkVoluntario(link);
     setEnviado(true);
+    window.open(link, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -34,26 +56,34 @@ export function CTAFinal() {
         <RevealItem delay={0.15} className="mx-auto mt-10 max-w-lg">
           {enviado ? (
             <div className="rounded-2xl border border-branco/15 bg-branco/10 p-8">
-              <p className="font-display text-lg font-bold text-branco">Obrigada por apoiar! 💛</p>
+              <p className="font-display text-lg font-bold text-branco">Quase lá! 💛</p>
               <p className="mt-2 text-sm text-branco/70">
-                Em breve alguém da equipe da Deisi entra em contato com você.
+                Abrimos o WhatsApp com sua mensagem pronta pra equipe da
+                Deisi. Se não abriu automaticamente,{" "}
+                <a href={linkVoluntario} target="_blank" rel="noopener noreferrer" className="font-semibold text-luz-amarela underline">
+                  clique aqui pra enviar
+                </a>
+                .
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-3 text-left sm:grid-cols-2">
               <input
                 required
+                name="nome"
                 type="text"
                 placeholder="Seu nome"
                 className="rounded-xl border border-branco/20 bg-branco/95 px-4 py-3 text-sm text-tinta placeholder:text-tinta/40 outline-none focus:border-amarelo sm:col-span-2"
               />
               <input
                 required
+                name="whatsapp"
                 type="tel"
                 placeholder="WhatsApp"
                 className="rounded-xl border border-branco/20 bg-branco/95 px-4 py-3 text-sm text-tinta placeholder:text-tinta/40 outline-none focus:border-amarelo"
               />
               <input
+                name="cidade"
                 type="text"
                 placeholder="Cidade"
                 className="rounded-xl border border-branco/20 bg-branco/95 px-4 py-3 text-sm text-tinta placeholder:text-tinta/40 outline-none focus:border-amarelo"
@@ -69,7 +99,9 @@ export function CTAFinal() {
 
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="#contato"
+              href={WHATSAPP_LINK_DIRETO}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-branco/25 bg-branco px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-bordo transition-transform hover:scale-105"
             >
               Zap da Deisi
