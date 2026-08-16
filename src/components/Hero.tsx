@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import foto from "../assets/images/foto-oficial-deisi.png";
-import logo from "../assets/images/logo-deisi-sem-numero.png";
+import logo from "../assets/images/logo-deisi-vertical.png";
 import stickerEuToCom from "../assets/stickers/sticker-eu-to-com-deisi.png";
 import stickerJuntos from "../assets/stickers/sticker-juntos-pelo-rs.png";
 import { Sticker } from "./Sticker";

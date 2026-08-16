@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import logo from "../assets/images/logo-deisi-sem-numero.png";
+import logo from "../assets/images/logo-deisi-vertical.png";
 
 const NAV = [
   { href: "#quem-e", label: "Quem é" },

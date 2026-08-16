@@ -1,4 +1,4 @@
-import logo from "../assets/images/logo-deisi-sem-numero.png";
+import logo from "../assets/images/logo-deisi-vertical.png";
 import { Sticker } from "./Sticker";
 import stickerJuntos from "../assets/stickers/sticker-juntos-pelo-rs.png";
 
