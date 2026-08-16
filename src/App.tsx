@@ -2,6 +2,7 @@ import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { VideoImpacto } from "./components/VideoImpacto";
 import { QuemE } from "./components/QuemE";
+import { EnchenteReconstrucao } from "./components/EnchenteReconstrucao";
 import { OElo } from "./components/OElo";
 import { Bandeiras } from "./components/Bandeiras";
 import { Projetos } from "./components/Projetos";
@@ -19,6 +20,7 @@ function App() {
         <Hero />
         <VideoImpacto />
         <QuemE />
+        <EnchenteReconstrucao />
         <OElo />
         <Bandeiras />
         <Projetos />
