@@ -1,6 +1,7 @@
 import { type FormEvent, useState } from "react";
 import { RevealItem, RevealSection } from "./RevealSection";
 import { ZigzagPattern } from "./ZigzagPattern";
+import { supabase } from "../lib/supabase";
 
 // Zap da Deisi -- numero oficial da campanha.
 const WHATSAPP_NUMERO = "5551993441838";
@@ -12,12 +13,20 @@ export function CTAFinal() {
   const [enviado, setEnviado] = useState(false);
   const [linkVoluntario, setLinkVoluntario] = useState(WHATSAPP_LINK_DIRETO);
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const dados = new FormData(e.currentTarget);
     const nome = String(dados.get("nome") || "").trim();
     const whatsapp = String(dados.get("whatsapp") || "").trim();
     const cidade = String(dados.get("cidade") || "").trim();
+
+    // registra o acesso/lead no Supabase (nao bloqueia o fluxo se falhar)
+    supabase
+      ?.from("deisi_voluntarios")
+      .insert({ nome, whatsapp, cidade })
+      .then(({ error }) => {
+        if (error) console.error("Erro ao salvar voluntario:", error.message);
+      });
 
     const mensagem = [
       "Olá, Deisi! Quero ser voluntária(o) na campanha.",
