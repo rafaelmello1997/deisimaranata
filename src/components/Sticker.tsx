@@ -13,12 +13,14 @@ export function Sticker({ src, className = "", rotate = 0, delay = 0, width = 14
       alt=""
       aria-hidden="true"
       draggable={false}
-      className={`pointer-events-none select-none animate-float drop-shadow-[0_12px_28px_rgba(0,0,0,0.35)] ${className}`}
-      style={{
-        width,
-        transform: `rotate(${rotate}deg)`,
-        animationDelay: `${delay}s`,
-      }}
+      className={`pointer-events-none w-[var(--sticker-w)] select-none animate-float drop-shadow-[0_12px_28px_rgba(0,0,0,0.35)] ${className}`}
+      style={
+        {
+          "--sticker-w": `${width}px`,
+          transform: `rotate(${rotate}deg)`,
+          animationDelay: `${delay}s`,
+        } as React.CSSProperties
+      }
     />
   );
 }

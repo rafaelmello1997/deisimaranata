@@ -113,7 +113,7 @@ export function Hero() {
             width={420}
             rotate={-4}
             delay={0.5}
-            className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 opacity-95 sm:w-[620px] lg:bottom-2 lg:w-[760px]"
+            className="absolute bottom-4 left-1/2 z-10 max-w-[calc(100%-2rem)] -translate-x-1/2 opacity-95 sm:bottom-9 sm:w-[620px] lg:bottom-12 lg:w-[760px]"
           />
         </motion.div>
 
