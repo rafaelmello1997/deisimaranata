@@ -8,6 +8,8 @@ const NAV = [
   { href: "#o-elo", label: "O Elo" },
   { href: "#bandeiras", label: "Bandeiras" },
   { href: "#projetos", label: "Projetos" },
+  { href: "#gerador-foto", label: "Foto de perfil" },
+  { href: "#figurinhas", label: "Figurinhas" },
   { href: "#contato", label: "Contato" },
 ];
 
@@ -37,7 +39,7 @@ export function Header() {
         <a href="#inicio" className="flex items-center gap-2">
           <img src={logo} alt="Deisi Maranata" className="h-9 w-auto drop-shadow-md sm:h-11" />
         </a>
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-5 lg:flex">
           {NAV.map((item) => (
             <a
               key={item.href}
