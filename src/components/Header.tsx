@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import logo from "../assets/images/logo-deisi-vertical.png";
+import { useContent } from "../lib/SiteContentContext";
 
 const NAV = [
   { href: "#quem-e", label: "Quem é" },
@@ -12,6 +13,7 @@ const NAV = [
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const ctaLabel = useContent("header.cta", "Quero apoiar");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 64);
@@ -50,7 +52,7 @@ export function Header() {
           href="#apoiar"
           className="rounded-full bg-amarelo px-5 py-2 text-xs font-bold uppercase tracking-[0.14em] text-tinta transition-transform hover:scale-105"
         >
-          Quero apoiar
+          {ctaLabel}
         </a>
       </div>
     </motion.header>

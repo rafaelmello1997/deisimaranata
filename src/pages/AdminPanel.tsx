@@ -2,6 +2,9 @@ import { type FormEvent, useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
 import logo from "../assets/images/logo-deisi-vertical.png";
+import { ConteudoEditor } from "../components/admin/ConteudoEditor";
+
+type Aba = "voluntarios" | "conteudo";
 
 interface Voluntario {
   id: string;
@@ -17,6 +20,7 @@ export function AdminPanel() {
   const [erro, setErro] = useState("");
   const [carregando, setCarregando] = useState(false);
   const [voluntarios, setVoluntarios] = useState<Voluntario[]>([]);
+  const [aba, setAba] = useState<Aba>("voluntarios");
 
   useEffect(() => {
     if (!supabase) return;
@@ -123,16 +127,18 @@ export function AdminPanel() {
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <img src={logo} alt="Deisi Maranata" className="h-10 w-auto" />
-            <h1 className="font-display text-xl font-bold uppercase">Voluntários cadastrados</h1>
+            <h1 className="font-display text-xl font-bold uppercase">Painel da campanha</h1>
           </div>
           <div className="flex gap-3">
-            <button
-              onClick={exportarCsv}
-              disabled={!voluntarios.length}
-              className="rounded-full border border-branco/25 px-5 py-2 text-xs font-bold uppercase tracking-wide text-branco disabled:opacity-40"
-            >
-              Exportar CSV
-            </button>
+            {aba === "voluntarios" && (
+              <button
+                onClick={exportarCsv}
+                disabled={!voluntarios.length}
+                className="rounded-full border border-branco/25 px-5 py-2 text-xs font-bold uppercase tracking-wide text-branco disabled:opacity-40"
+              >
+                Exportar CSV
+              </button>
+            )}
             <button
               onClick={handleLogout}
               className="rounded-full bg-amarelo px-5 py-2 text-xs font-bold uppercase tracking-wide text-tinta"
@@ -142,43 +148,72 @@ export function AdminPanel() {
           </div>
         </div>
 
-        <p className="mt-2 text-sm text-branco/60">
-          {carregando ? "Carregando…" : `${voluntarios.length} cadastro(s)`}
-        </p>
-
-        {erro && <p className="mt-4 text-sm text-luz-amarela">{erro}</p>}
-
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-branco/10">
-          <table className="w-full min-w-[560px] text-left text-sm">
-            <thead className="bg-branco/5 text-[11px] uppercase tracking-wide text-branco/60">
-              <tr>
-                <th className="px-4 py-3">Nome</th>
-                <th className="px-4 py-3">WhatsApp</th>
-                <th className="px-4 py-3">Cidade</th>
-                <th className="px-4 py-3">Data</th>
-              </tr>
-            </thead>
-            <tbody>
-              {voluntarios.map((v) => (
-                <tr key={v.id} className="border-t border-branco/10">
-                  <td className="px-4 py-3 font-medium">{v.nome}</td>
-                  <td className="px-4 py-3">{v.whatsapp}</td>
-                  <td className="px-4 py-3">{v.cidade || "—"}</td>
-                  <td className="px-4 py-3 text-branco/60">
-                    {new Date(v.created_at).toLocaleString("pt-BR")}
-                  </td>
-                </tr>
-              ))}
-              {!carregando && voluntarios.length === 0 && (
-                <tr>
-                  <td colSpan={4} className="px-4 py-10 text-center text-branco/50">
-                    Ninguém se cadastrou ainda.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+        <div className="mt-6 flex gap-2 border-b border-branco/10">
+          <button
+            onClick={() => setAba("voluntarios")}
+            className={`px-4 py-2 text-xs font-bold uppercase tracking-wide ${
+              aba === "voluntarios"
+                ? "border-b-2 border-amarelo text-branco"
+                : "text-branco/50 hover:text-branco/80"
+            }`}
+          >
+            Voluntários
+          </button>
+          <button
+            onClick={() => setAba("conteudo")}
+            className={`px-4 py-2 text-xs font-bold uppercase tracking-wide ${
+              aba === "conteudo"
+                ? "border-b-2 border-amarelo text-branco"
+                : "text-branco/50 hover:text-branco/80"
+            }`}
+          >
+            Editar site
+          </button>
         </div>
+
+        {aba === "voluntarios" ? (
+          <>
+            <p className="mt-6 text-sm text-branco/60">
+              {carregando ? "Carregando…" : `${voluntarios.length} cadastro(s)`}
+            </p>
+
+            {erro && <p className="mt-4 text-sm text-luz-amarela">{erro}</p>}
+
+            <div className="mt-6 overflow-x-auto rounded-2xl border border-branco/10">
+              <table className="w-full min-w-[560px] text-left text-sm">
+                <thead className="bg-branco/5 text-[11px] uppercase tracking-wide text-branco/60">
+                  <tr>
+                    <th className="px-4 py-3">Nome</th>
+                    <th className="px-4 py-3">WhatsApp</th>
+                    <th className="px-4 py-3">Cidade</th>
+                    <th className="px-4 py-3">Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {voluntarios.map((v) => (
+                    <tr key={v.id} className="border-t border-branco/10">
+                      <td className="px-4 py-3 font-medium">{v.nome}</td>
+                      <td className="px-4 py-3">{v.whatsapp}</td>
+                      <td className="px-4 py-3">{v.cidade || "—"}</td>
+                      <td className="px-4 py-3 text-branco/60">
+                        {new Date(v.created_at).toLocaleString("pt-BR")}
+                      </td>
+                    </tr>
+                  ))}
+                  {!carregando && voluntarios.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="px-4 py-10 text-center text-branco/50">
+                        Ninguém se cadastrou ainda.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+          <ConteudoEditor />
+        )}
       </div>
     </div>
   );

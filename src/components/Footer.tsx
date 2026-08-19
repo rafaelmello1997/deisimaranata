@@ -1,8 +1,17 @@
 import logo from "../assets/images/logo-deisi-vertical.png";
 import { Sticker } from "./Sticker";
 import stickerJuntos from "../assets/stickers/sticker-juntos-pelo-rs.png";
+import { useContent } from "../lib/SiteContentContext";
 
 export function Footer() {
+  const badge = useContent("footer.badge", "Candidata a Deputada Estadual");
+  const facebookUrl = useContent("footer.facebook_url", "https://www.facebook.com/deisimaranata");
+  const nomeLegalLinha = useContent(
+    "footer.nome_legal_linha",
+    "Eleição 2026 · Deisi Silveira Reinaldo · Deputado Estadual",
+  );
+  const cnpjLinha = useContent("footer.cnpj_linha", "CNPJ 68.293.886/0001-42");
+
   return (
     <footer id="contato" className="relative overflow-hidden bg-bordo py-16">
       <Sticker
@@ -18,11 +27,11 @@ export function Footer() {
         </a>
 
         <span className="rounded-full bg-amarelo px-4 py-1 text-xs font-bold uppercase tracking-[0.14em] text-tinta">
-          Candidata a Deputada Estadual
+          {badge}
         </span>
 
         <a
-          href="https://www.facebook.com/deisimaranata"
+          href={facebookUrl}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Facebook da Deisi Maranata"
@@ -41,10 +50,10 @@ export function Footer() {
             Material de campanha · Deisi Maranata {new Date().getFullYear()}
           </p>
           <p className="text-[11px] uppercase tracking-[0.08em] text-branco/30">
-            Eleição 2026 · Deisi Silveira Reinaldo · Deputado Estadual
+            {nomeLegalLinha}
           </p>
           <p className="text-[11px] tracking-[0.08em] text-branco/30">
-            CNPJ 68.293.886/0001-42
+            {cnpjLinha}
           </p>
         </div>
       </div>

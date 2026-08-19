@@ -1,5 +1,6 @@
 import { RevealItem, RevealSection } from "./RevealSection";
 import { ZigzagPattern } from "./ZigzagPattern";
+import { pickContent, useContent, useContentMap } from "../lib/SiteContentContext";
 
 const BANDEIRAS = [
   {
@@ -30,25 +31,36 @@ const BANDEIRAS = [
 ];
 
 export function Bandeiras() {
+  const map = useContentMap();
+  const eyebrow = useContent("bandeiras.eyebrow", "O que defendo");
+  const titulo = useContent("bandeiras.titulo", "Bandeiras de luta");
+  const subtitulo = useContent(
+    "bandeiras.subtitulo",
+    "Compromissos claros pra Assembleia Legislativa, pautados pela emancipação do cidadão e pela eficiência do Estado.",
+  );
+
   return (
     <RevealSection id="bandeiras" className="relative overflow-hidden bg-branco py-24 md:py-32">
       <ZigzagPattern tone="dark" />
       <div className="relative mx-auto max-w-6xl px-6">
         <RevealItem className="mx-auto max-w-2xl text-center">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-bordo">
-            O que defendo
+            {eyebrow}
           </span>
           <h2 className="mt-4 font-display text-3xl font-extrabold uppercase text-tinta md:text-5xl">
-            Bandeiras de luta
+            {titulo}
           </h2>
-          <p className="mt-4 text-sm text-tinta/65 md:text-base">
-            Compromissos claros pra Assembleia Legislativa, pautados pela
-            emancipação do cidadão e pela eficiência do Estado.
-          </p>
+          <p className="mt-4 text-sm text-tinta/65 md:text-base">{subtitulo}</p>
         </RevealItem>
 
         <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
-          {BANDEIRAS.map((b, i) => (
+          {BANDEIRAS.map((bFallback, i) => {
+            const b = {
+              ...bFallback,
+              titulo: pickContent(map, `bandeiras.${bFallback.n}.titulo`, bFallback.titulo),
+              texto: pickContent(map, `bandeiras.${bFallback.n}.texto`, bFallback.texto),
+            };
+            return (
             <RevealItem
               key={b.n}
               delay={i * 0.08}
@@ -66,7 +78,8 @@ export function Bandeiras() {
                 </div>
               </div>
             </RevealItem>
-          ))}
+            );
+          })}
         </div>
       </div>
     </RevealSection>

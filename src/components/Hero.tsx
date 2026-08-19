@@ -5,9 +5,14 @@ import logo from "../assets/images/logo-deisi-vertical.png";
 import stickerEuToCom from "../assets/stickers/sticker-eu-to-com-deisi.png";
 import stickerJuntos from "../assets/stickers/sticker-juntos-pelo-rs.png";
 import { Sticker } from "./Sticker";
+import { useContent } from "../lib/SiteContentContext";
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const badge = useContent("hero.badge", "Candidata a Deputada Estadual");
+  const ctaApoiar = useContent("hero.cta_apoiar", "Quero apoiar");
+  const ctaConhecer = useContent("hero.cta_conhecer", "Conheça a Deisi");
+  const fotoUrl = useContent("hero.foto", foto);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -97,7 +102,7 @@ export function Hero() {
         >
           <div className="absolute bottom-8 h-[70%] w-[90%] rounded-full bg-amarelo/15 blur-[70px] lg:bottom-0 lg:left-1/2 lg:h-[80%] lg:w-[60%] lg:-translate-x-1/2" />
           <img
-            src={foto}
+            src={fotoUrl}
             alt="Deisi Maranata"
             className="relative h-full w-auto max-w-full select-none object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.45)] lg:object-bottom"
             draggable={false}
@@ -125,7 +130,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 rounded-full border border-amarelo/40 bg-branco/5 px-4 py-1 text-[9px] font-semibold uppercase tracking-[0.24em] text-amarelo backdrop-blur-sm sm:text-[10px]"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-amarelo" />
-              Candidata a Deputada Estadual
+              {badge}
             </motion.span>
 
             <motion.img
@@ -148,13 +153,13 @@ export function Hero() {
                 href="#apoiar"
                 className="rounded-full bg-amarelo px-8 py-4 text-sm font-bold uppercase tracking-[0.1em] text-tinta shadow-[0_8px_30px_rgba(255,204,0,0.35)] transition-transform hover:scale-105 sm:px-10 sm:py-5 sm:text-base"
               >
-                Quero apoiar
+                {ctaApoiar}
               </a>
               <a
                 href="#quem-e"
                 className="rounded-full border border-branco/25 px-8 py-4 text-sm font-bold uppercase tracking-[0.1em] text-branco/90 transition-colors hover:border-amarelo/50 sm:px-10 sm:py-5 sm:text-base"
               >
-                Conheça a Deisi
+                {ctaConhecer}
               </a>
             </motion.div>
           </motion.div>

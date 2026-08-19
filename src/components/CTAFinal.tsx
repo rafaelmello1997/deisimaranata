@@ -2,16 +2,20 @@ import { type FormEvent, useState } from "react";
 import { RevealItem, RevealSection } from "./RevealSection";
 import { ZigzagPattern } from "./ZigzagPattern";
 import { supabase } from "../lib/supabase";
-
-// Zap da Deisi -- numero oficial da campanha.
-const WHATSAPP_NUMERO = "5551993441838";
-const WHATSAPP_LINK_DIRETO = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(
-  "Olá! Vim através do site da Deisi Maranata e quero saber mais.",
-)}`;
+import { useContent } from "../lib/SiteContentContext";
 
 export function CTAFinal() {
   const [enviado, setEnviado] = useState(false);
-  const [linkVoluntario, setLinkVoluntario] = useState(WHATSAPP_LINK_DIRETO);
+  const [linkVoluntario, setLinkVoluntario] = useState("");
+  const eyebrow = useContent("cta_final.eyebrow", "Vamos juntos");
+  const tituloLinha1 = useContent("cta_final.titulo_linha1", "Cuidar das pessoas,");
+  const tituloLinha2 = useContent("cta_final.titulo_linha2", "transformar o Rio Grande");
+  const formBotao = useContent("cta_final.form_botao", "Quero ser voluntária(o)");
+  const whatsappBotao = useContent("cta_final.whatsapp_botao", "Zap da Deisi");
+  const whatsappNumero = useContent("cta_final.whatsapp_numero", "5551993441838");
+  const whatsappLinkDireto = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(
+    "Olá! Vim através do site da Deisi Maranata e quero saber mais.",
+  )}`;
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -37,7 +41,7 @@ export function CTAFinal() {
       .filter(Boolean)
       .join("\n");
 
-    const link = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
+    const link = `https://wa.me/${whatsappNumero}?text=${encodeURIComponent(mensagem)}`;
     setLinkVoluntario(link);
     setEnviado(true);
     window.open(link, "_blank", "noopener,noreferrer");
@@ -54,11 +58,11 @@ export function CTAFinal() {
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <RevealItem>
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-luz-amarela">
-            Vamos juntos
+            {eyebrow}
           </span>
           <h2 className="mt-4 font-display text-3xl font-extrabold uppercase leading-[0.95] text-branco md:text-5xl">
-            Cuidar das pessoas,
-            <br /> transformar o Rio Grande
+            {tituloLinha1}
+            <br /> {tituloLinha2}
           </h2>
         </RevealItem>
 
@@ -101,19 +105,19 @@ export function CTAFinal() {
                 type="submit"
                 className="rounded-xl bg-amarelo px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-tinta transition-transform hover:scale-[1.02] sm:col-span-2"
               >
-                Quero ser voluntária(o)
+                {formBotao}
               </button>
             </form>
           )}
 
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <a
-              href={WHATSAPP_LINK_DIRETO}
+              href={whatsappLinkDireto}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-branco/25 bg-branco px-6 py-3 text-sm font-bold uppercase tracking-[0.1em] text-bordo transition-transform hover:scale-105"
             >
-              Zap da Deisi
+              {whatsappBotao}
             </a>
           </div>
         </RevealItem>
