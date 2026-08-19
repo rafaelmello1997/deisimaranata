@@ -9,6 +9,7 @@ import { Projetos } from "./components/Projetos";
 import { Depoimentos } from "./components/Depoimentos";
 import { EspacoMaranata } from "./components/EspacoMaranata";
 import { Galeria } from "./components/Galeria";
+import { GeradorFoto } from "./components/GeradorFoto";
 import { CTAFinal } from "./components/CTAFinal";
 import { Footer } from "./components/Footer";
 import { AdminPanel } from "./pages/AdminPanel";
@@ -33,6 +34,7 @@ function App() {
         <Depoimentos />
         <EspacoMaranata />
         <Galeria />
+        <GeradorFoto />
         <CTAFinal />
       </main>
       <Footer />

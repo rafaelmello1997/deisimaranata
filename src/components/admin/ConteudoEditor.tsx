@@ -29,6 +29,7 @@ const CONTENT_ORDER = [
   "espaco.stat1_valor", "espaco.stat1_label", "espaco.stat2_valor", "espaco.stat2_label", "espaco.stat3_valor", "espaco.stat3_label",
   "espaco.foto_1", "espaco.foto_2",
   "galeria.eyebrow", "galeria.titulo_linha1", "galeria.titulo_linha2", "galeria.texto", "galeria.badge", "galeria.foto",
+  "gerador_foto.eyebrow", "gerador_foto.titulo", "gerador_foto.texto",
   "cta_final.eyebrow", "cta_final.titulo_linha1", "cta_final.titulo_linha2", "cta_final.form_botao", "cta_final.whatsapp_botao", "cta_final.whatsapp_numero",
   "footer.badge", "footer.facebook_url", "footer.nome_legal_linha", "footer.cnpj_linha",
 ];
