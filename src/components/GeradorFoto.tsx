@@ -38,7 +38,7 @@ const MOLDURAS: Moldura[] = [
     src: "/assets/moldura/moldura-recomendo.png",
     w: 1080,
     h: 2150,
-    hole: { type: "rect", x: 0, y: 0, w: 1080, h: 1162 },
+    hole: { type: "rect", x: 0, y: 0, w: 1080, h: 2150 },
     downloadName: "recomendo-deisi-maranata-20700.png",
     temTexto: true,
   },
