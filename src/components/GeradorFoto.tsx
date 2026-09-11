@@ -3,17 +3,68 @@ import { RevealItem, RevealSection } from "./RevealSection";
 import { ZigzagPattern } from "./ZigzagPattern";
 import { useContent } from "../lib/SiteContentContext";
 
-// Moldura oficial "Estou com Deisi Maranata" (reaproveitada do gerador
-// standalone da campanha). Geometria do recorte circular fixa na arte:
-// area transparente centralizada em (540.5, 540) com 868px de diametro,
-// numa tela 1081x1081. Nao deve ser trocada pelo painel de conteudo --
-// qualquer outra arte quebraria esse encaixe.
-const MOLDURA_SRC = "/assets/moldura/moldura-estou-com-deisi.png";
-const W = 1081;
-const H = 1081;
-const PHOTO_CX = 540.5;
-const PHOTO_CY = 540;
-const PHOTO_D = 868;
+// Molduras da campanha. Cada uma tem geometria de recorte fixa na propria
+// arte (circulo ou retangulo) -- nao deve ser trocada pelo painel de
+// conteudo, so os textos (titulo/subtitulo) sao editaveis.
+type Hole = { type: "circle"; cx: number; cy: number; d: number } | { type: "rect"; x: number; y: number; w: number; h: number };
+
+interface Moldura {
+  id: string;
+  nome: string;
+  thumb: string;
+  src: string;
+  w: number;
+  h: number;
+  hole: Hole;
+  downloadName: string;
+  temTexto?: boolean;
+}
+
+const MOLDURAS: Moldura[] = [
+  {
+    id: "classica",
+    nome: "Estou com Deisi",
+    thumb: "/assets/moldura/moldura-estou-com-deisi.png",
+    src: "/assets/moldura/moldura-estou-com-deisi.png",
+    w: 1081,
+    h: 1081,
+    hole: { type: "circle", cx: 540.5, cy: 540, d: 868 },
+    downloadName: "foto-perfil-deisi-maranata-20700.png",
+  },
+  {
+    id: "recomendo",
+    nome: "Essa eu recomendo",
+    thumb: "/assets/moldura/moldura-recomendo-thumb.png",
+    src: "/assets/moldura/moldura-recomendo.png",
+    w: 1080,
+    h: 2150,
+    hole: { type: "rect", x: 0, y: 0, w: 1080, h: 1162 },
+    downloadName: "recomendo-deisi-maranata-20700.png",
+    temTexto: true,
+  },
+];
+
+function holeBox(hole: Hole) {
+  if (hole.type === "circle") return { cx: hole.cx, cy: hole.cy, w: hole.d, h: hole.d };
+  return { cx: hole.x + hole.w / 2, cy: hole.y + hole.h / 2, w: hole.w, h: hole.h };
+}
+
+function wrapText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let current = "";
+  for (const word of words) {
+    const test = current ? `${current} ${word}` : word;
+    if (current && ctx.measureText(test).width > maxWidth) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = test;
+    }
+  }
+  if (current) lines.push(current);
+  return lines;
+}
 
 export function GeradorFoto() {
   const eyebrow = useContent("gerador_foto.eyebrow", "Mobilize sua rede");
@@ -22,27 +73,40 @@ export function GeradorFoto() {
     "gerador_foto.texto",
     "Escolha sua foto, ajuste dentro da moldura e baixe pronta pra usar no Facebook e no Instagram.",
   );
+  const recomendoTitulo = useContent("gerador_foto.moldura2_titulo", "Essa eu recomendo e peço o teu voto!");
+  const recomendoTexto = useContent(
+    "gerador_foto.moldura2_texto",
+    "A Deisi Maranata conhece a nossa realidade, já fez projetos que mudaram realidades e já mostrou que sabe cuidar das pessoas. Por isso o meu voto é nela.",
+  );
+
+  const [molduraId, setMolduraId] = useState(MOLDURAS[0].id);
+  const moldura = MOLDURAS.find((m) => m.id === molduraId) ?? MOLDURAS[0];
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const frameImgRef = useRef<HTMLImageElement | null>(null);
   const photoImgRef = useRef<HTMLImageElement | null>(null);
+  const molduraRef = useRef(moldura);
+  const textoRef = useRef({ titulo: recomendoTitulo, texto: recomendoTexto });
   const estadoRef = useRef({ zoom: 1, offsetX: 0, offsetY: 0, dragging: false, lastX: 0, lastY: 0 });
 
   const [temFoto, setTemFoto] = useState(false);
   const [zoom, setZoom] = useState(1);
   const [mostrarDica, setMostrarDica] = useState(false);
 
-  function fitScale(photo: HTMLImageElement) {
-    return Math.max(PHOTO_D / photo.naturalWidth, PHOTO_D / photo.naturalHeight);
+  molduraRef.current = moldura;
+  textoRef.current = { titulo: recomendoTitulo, texto: recomendoTexto };
+
+  function fitScale(photo: HTMLImageElement, box: { w: number; h: number }) {
+    return Math.max(box.w / photo.naturalWidth, box.h / photo.naturalHeight);
   }
 
-  function clampOffsets(photo: HTMLImageElement) {
-    const s = fitScale(photo) * estadoRef.current.zoom;
+  function clampOffsets(photo: HTMLImageElement, box: { w: number; h: number }) {
+    const s = fitScale(photo, box) * estadoRef.current.zoom;
     const dw = photo.naturalWidth * s;
     const dh = photo.naturalHeight * s;
-    const maxX = Math.max(0, (dw - PHOTO_D) / 2);
-    const maxY = Math.max(0, (dh - PHOTO_D) / 2);
+    const maxX = Math.max(0, (dw - box.w) / 2);
+    const maxY = Math.max(0, (dh - box.h) / 2);
     estadoRef.current.offsetX = Math.max(-maxX, Math.min(maxX, estadoRef.current.offsetX));
     estadoRef.current.offsetY = Math.max(-maxY, Math.min(maxY, estadoRef.current.offsetY));
   }
@@ -50,33 +114,72 @@ export function GeradorFoto() {
   function render() {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
+    const m = molduraRef.current;
     if (!canvas || !ctx) return;
 
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, m.w, m.h);
     ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, W, H);
+    ctx.fillRect(0, 0, m.w, m.h);
 
     const photo = photoImgRef.current;
+    const box = holeBox(m.hole);
     if (photo) {
-      clampOffsets(photo);
-      const s = fitScale(photo) * estadoRef.current.zoom;
+      clampOffsets(photo, box);
+      const s = fitScale(photo, box) * estadoRef.current.zoom;
       const dw = photo.naturalWidth * s;
       const dh = photo.naturalHeight * s;
-      const x = PHOTO_CX - dw / 2 + estadoRef.current.offsetX;
-      const y = PHOTO_CY - dh / 2 + estadoRef.current.offsetY;
+      const x = box.cx - dw / 2 + estadoRef.current.offsetX;
+      const y = box.cy - dh / 2 + estadoRef.current.offsetY;
       ctx.drawImage(photo, x, y, dw, dh);
     }
 
     const frame = frameImgRef.current;
-    if (frame?.complete) ctx.drawImage(frame, 0, 0, W, H);
+    if (frame?.complete && frame.src.endsWith(m.src)) ctx.drawImage(frame, 0, 0, m.w, m.h);
+
+    if (m.temTexto) {
+      const { titulo: t, texto: p } = textoRef.current;
+      const logoBottom = 1501;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "alphabetic";
+
+      ctx.font = "800 56px 'TT Chocolates'";
+      ctx.fillStyle = "#FFFFFF";
+      let ty = logoBottom + 100;
+      for (const line of wrapText(ctx, t, 900)) {
+        ctx.fillText(line, m.w / 2, ty);
+        ty += 66;
+      }
+
+      ty += 20;
+      ctx.font = "400 34px 'TT Chocolates'";
+      ctx.fillStyle = "rgba(255,255,255,0.92)";
+      for (const line of wrapText(ctx, p, 860)) {
+        ctx.fillText(line, m.w / 2, ty);
+        ty += 46;
+      }
+    }
   }
 
   useEffect(() => {
     const frame = new Image();
     frame.onload = render;
-    frame.src = MOLDURA_SRC;
+    frame.src = moldura.src;
     frameImgRef.current = frame;
+    estadoRef.current.zoom = 1;
+    estadoRef.current.offsetX = 0;
+    estadoRef.current.offsetY = 0;
+    setZoom(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [molduraId]);
+
+  useEffect(() => {
+    document.fonts?.ready?.then(() => render());
   }, []);
+
+  useEffect(() => {
+    render();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [recomendoTitulo, recomendoTexto]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -84,7 +187,8 @@ export function GeradorFoto() {
 
     function pointerPos(e: PointerEvent) {
       const r = canvas!.getBoundingClientRect();
-      return { x: (e.clientX - r.left) * (W / r.width), y: (e.clientY - r.top) * (H / r.height) };
+      const m = molduraRef.current;
+      return { x: (e.clientX - r.left) * (m.w / r.width), y: (e.clientY - r.top) * (m.h / r.height) };
     }
     function onDown(e: PointerEvent) {
       if (!photoImgRef.current) return;
@@ -169,6 +273,11 @@ export function GeradorFoto() {
     render();
   }
 
+  function handleTrocarMoldura(id: string) {
+    if (id === molduraId) return;
+    setMolduraId(id);
+  }
+
   function handleBaixar() {
     const canvas = canvasRef.current;
     if (!canvas || !photoImgRef.current) return;
@@ -177,7 +286,7 @@ export function GeradorFoto() {
       if (!blob) return;
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "foto-perfil-deisi-maranata-20700.png";
+      a.download = moldura.downloadName;
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -196,21 +305,44 @@ export function GeradorFoto() {
         </RevealItem>
 
         <RevealItem delay={0.1} className="mt-14 grid grid-cols-1 items-start gap-6 md:grid-cols-[1fr_340px]">
-          <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-[2rem] border border-bordo/10 bg-branco shadow-[0_20px_50px_rgba(32,4,16,0.15)] md:max-w-none">
-            <canvas
-              ref={canvasRef}
-              width={W}
-              height={H}
-              aria-label="Prévia da foto de perfil com moldura da campanha"
-              className="aspect-square w-full touch-none select-none [cursor:grab] active:[cursor:grabbing]"
-            />
-            <span
-              className={`pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-tinta/80 px-3 py-2 text-xs text-branco transition-opacity duration-200 ${
-                mostrarDica ? "opacity-100" : "opacity-0"
-              }`}
+          <div className="mx-auto w-full max-w-md md:max-w-none">
+            <div
+              className="relative mx-auto w-full overflow-hidden rounded-[2rem] border border-bordo/10 bg-branco shadow-[0_20px_50px_rgba(32,4,16,0.15)]"
+              style={{ aspectRatio: `${moldura.w} / ${moldura.h}`, maxWidth: moldura.hole.type === "rect" ? 360 : undefined }}
             >
-              Arraste a foto para posicionar
-            </span>
+              <canvas
+                ref={canvasRef}
+                width={moldura.w}
+                height={moldura.h}
+                aria-label="Prévia da foto de perfil com moldura da campanha"
+                className="h-full w-full touch-none select-none [cursor:grab] active:[cursor:grabbing]"
+              />
+              <span
+                className={`pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-tinta/80 px-3 py-2 text-xs text-branco transition-opacity duration-200 ${
+                  mostrarDica ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                Arraste a foto para posicionar
+              </span>
+            </div>
+
+            <div className="mx-auto mt-4 flex w-full max-w-md justify-center gap-3 md:max-w-none">
+              {MOLDURAS.map((m) => (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => handleTrocarMoldura(m.id)}
+                  className={`flex flex-col items-center gap-1.5 rounded-xl border-2 p-1.5 transition-colors ${
+                    m.id === molduraId ? "border-bordo" : "border-transparent hover:border-bordo/30"
+                  }`}
+                >
+                  <span className="block h-14 w-14 overflow-hidden rounded-lg bg-tinta/5">
+                    <img src={m.thumb} alt={m.nome} className="h-full w-full object-cover object-top" />
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-wide text-tinta/70">{m.nome}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="rounded-2xl border border-tinta/10 bg-bordo/[0.045] p-6">
@@ -268,7 +400,7 @@ export function GeradorFoto() {
               <div>
                 <p className="font-display text-sm font-bold uppercase tracking-wide text-tinta">Baixe a imagem pronta</p>
                 <p className="mt-1 text-xs leading-relaxed text-tinta/60">
-                  Gerada no tamanho original da arte: 1081 × 1081 px.
+                  Gerada no tamanho original da arte: {moldura.w} × {moldura.h} px.
                 </p>
               </div>
             </div>
