@@ -32,6 +32,7 @@ const CONTENT_ORDER = [
   "gerador_foto.eyebrow", "gerador_foto.titulo", "gerador_foto.texto",
   "gerador_foto.moldura2_titulo", "gerador_foto.moldura2_texto",
   "figurinhas.eyebrow", "figurinhas.titulo", "figurinhas.texto",
+  "colinha.eyebrow", "colinha.titulo", "colinha.texto",
   "cta_final.eyebrow", "cta_final.titulo_linha1", "cta_final.titulo_linha2", "cta_final.form_botao", "cta_final.whatsapp_botao", "cta_final.whatsapp_numero",
   "footer.badge", "footer.facebook_url", "footer.nome_legal_linha", "footer.cnpj_linha",
 ];

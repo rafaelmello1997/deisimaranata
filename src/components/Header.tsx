@@ -10,6 +10,7 @@ const NAV = [
   { href: "#projetos", label: "Projetos" },
   { href: "#gerador-foto", label: "Foto de perfil" },
   { href: "#figurinhas", label: "Figurinhas" },
+  { href: "#colinha", label: "Colinha" },
   { href: "#contato", label: "Contato" },
 ];
 

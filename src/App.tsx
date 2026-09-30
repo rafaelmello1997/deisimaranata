@@ -12,6 +12,7 @@ import { EspacoMaranata } from "./components/EspacoMaranata";
 import { Galeria } from "./components/Galeria";
 import { GeradorFoto } from "./components/GeradorFoto";
 import { Figurinhas } from "./components/Figurinhas";
+import { ColinhaVirtual } from "./components/ColinhaVirtual";
 import { CTAFinal } from "./components/CTAFinal";
 import { Footer } from "./components/Footer";
 import { AdminPanel } from "./pages/AdminPanel";
@@ -55,6 +56,7 @@ function App() {
         <Galeria />
         <GeradorFoto />
         <Figurinhas />
+        <ColinhaVirtual />
         <CTAFinal />
       </main>
       <Footer />
