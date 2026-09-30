@@ -23,12 +23,12 @@ interface Moldura {
 const MOLDURAS: Moldura[] = [
   {
     id: "classica",
-    nome: "Estou com Deisi",
+    nome: "Vem fazer história",
     thumb: "/assets/moldura/moldura-estou-com-deisi.png",
     src: "/assets/moldura/moldura-estou-com-deisi.png",
-    w: 1081,
-    h: 1081,
-    hole: { type: "circle", cx: 540.5, cy: 540, d: 868 },
+    w: 1200,
+    h: 1199,
+    hole: { type: "circle", cx: 599.5, cy: 599.5, d: 961 },
     downloadName: "foto-perfil-deisi-maranata-20700.png",
   },
   {
