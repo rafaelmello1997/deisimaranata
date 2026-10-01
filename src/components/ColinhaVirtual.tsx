@@ -81,7 +81,7 @@ function CaixasNumero({
           inputMode="numeric"
           maxLength={1}
           aria-label={`dígito ${i + 1}`}
-          className="h-16 w-12 rounded-lg border-2 border-bordo/25 text-center text-2xl font-extrabold text-tinta outline-none focus:border-bordo disabled:bg-tinta/5 sm:h-20 sm:w-16 sm:text-3xl"
+          className="h-16 w-12 rounded-lg border-2 border-bordo/25 text-center text-3xl font-extrabold text-tinta outline-none focus:border-bordo disabled:bg-tinta/5 sm:h-20 sm:w-16 sm:text-4xl"
         />
       ))}
     </div>
@@ -236,7 +236,7 @@ export function ColinhaVirtual() {
                         {"20700".split("").map((d, i) => (
                           <span
                             key={i}
-                            className="flex h-16 w-12 items-center justify-center rounded-lg border-2 border-bordo bg-bordo text-2xl font-extrabold text-branco sm:h-20 sm:w-16 sm:text-3xl"
+                            className="flex h-16 w-12 items-center justify-center rounded-lg border-2 border-bordo bg-bordo text-3xl font-extrabold text-branco sm:h-20 sm:w-16 sm:text-4xl"
                           >
                             {d}
                           </span>
