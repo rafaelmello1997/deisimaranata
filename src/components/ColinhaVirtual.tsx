@@ -109,19 +109,21 @@ function CampoBusca({ campo, mapa }: { campo: Campo; mapa: Mapa | null }) {
           </button>
         )}
       </div>
-      <div className="mt-3 flex flex-wrap items-center gap-4">
-        <CaixasNumero tamanho={campo.tamanho} valor={digitos} onChange={setDigitos} />
-        {candidato && (
-          <div className="flex items-center gap-3">
+      <div className="mt-3 flex flex-col gap-3">
+        <div className="flex flex-wrap items-center gap-3">
+          <CaixasNumero tamanho={campo.tamanho} valor={digitos} onChange={setDigitos} />
+          {candidato && (
             <img
               src={`/assets/colinha/fotos/${candidato.sq}.jpg`}
               alt={candidato.nome}
-              className="h-20 w-20 rounded-lg border-2 border-bordo/20 object-cover sm:h-24 sm:w-24"
+              className="h-16 w-16 rounded-lg border-2 border-bordo/20 object-cover object-top sm:h-20 sm:w-20"
             />
-            <div className="leading-tight">
-              <p className="text-lg font-bold text-tinta sm:text-xl">{candidato.nome}</p>
-              <p className="text-sm uppercase tracking-wide text-tinta/45 sm:text-base">{candidato.partido}</p>
-            </div>
+          )}
+        </div>
+        {candidato && (
+          <div className="leading-tight">
+            <p className="text-lg font-bold text-tinta sm:text-xl">{candidato.nome}</p>
+            <p className="text-sm uppercase tracking-wide text-tinta/45 sm:text-base">{candidato.partido}</p>
           </div>
         )}
         {naoEncontrado && (
@@ -166,7 +168,24 @@ export function ColinhaVirtual() {
     if (!cardRef.current || salvando) return;
     setSalvando(true);
     try {
-      const dataUrl = await toPng(cardRef.current, { pixelRatio: 2, backgroundColor: "#ffffff" });
+      const imgs = Array.from(cardRef.current.querySelectorAll("img"));
+      await Promise.all(
+        imgs.map((img) =>
+          img.complete && img.naturalWidth > 0
+            ? Promise.resolve()
+            : new Promise<void>((resolve) => {
+                img.addEventListener("load", () => resolve(), { once: true });
+                img.addEventListener("error", () => resolve(), { once: true });
+              }),
+        ),
+      );
+
+      const opcoes = { pixelRatio: 2, backgroundColor: "#ffffff" };
+      // primeira chamada "aquece" o cache interno do html-to-image -- sem ela a
+      // foto grande da Deisi (painel da direita) as vezes sai em branco na
+      // primeira exportacao apos o carregamento da pagina.
+      await toPng(cardRef.current, opcoes);
+      const dataUrl = await toPng(cardRef.current, opcoes);
       const a = document.createElement("a");
       a.href = dataUrl;
       a.download = "colinha-virtual-deisi-maranata.png";
@@ -211,27 +230,27 @@ export function ColinhaVirtual() {
                   <p className="text-xs font-bold uppercase tracking-wide text-bordo">
                     Deputada Estadual · sua candidata
                   </p>
-                  <div className="mt-3 flex flex-wrap items-center gap-4">
-                    <div className="flex gap-1.5">
-                      {"20700".split("").map((d, i) => (
-                        <span
-                          key={i}
-                          className="flex h-16 w-12 items-center justify-center rounded-lg border-2 border-bordo bg-bordo text-2xl font-extrabold text-branco sm:h-20 sm:w-16 sm:text-3xl"
-                        >
-                          {d}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="flex items-center gap-3">
+                  <div className="mt-3 flex flex-col gap-3">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <div className="flex gap-1.5">
+                        {"20700".split("").map((d, i) => (
+                          <span
+                            key={i}
+                            className="flex h-16 w-12 items-center justify-center rounded-lg border-2 border-bordo bg-bordo text-2xl font-extrabold text-branco sm:h-20 sm:w-16 sm:text-3xl"
+                          >
+                            {d}
+                          </span>
+                        ))}
+                      </div>
                       <img
                         src={`/assets/colinha/fotos/${DEISI_SQ}.jpg`}
                         alt="Deisi Maranata"
-                        className="h-20 w-20 rounded-lg border-2 border-bordo object-cover sm:h-24 sm:w-24"
+                        className="h-16 w-16 rounded-lg border-2 border-bordo object-cover object-top sm:h-20 sm:w-20"
                       />
-                      <div className="leading-tight">
-                        <p className="text-lg font-bold text-tinta sm:text-xl">DEISI MARANATA</p>
-                        <p className="text-sm uppercase tracking-wide text-tinta/45 sm:text-base">PODE</p>
-                      </div>
+                    </div>
+                    <div className="leading-tight">
+                      <p className="text-lg font-bold text-tinta sm:text-xl">DEISI MARANATA</p>
+                      <p className="text-sm uppercase tracking-wide text-tinta/45 sm:text-base">PODE</p>
                     </div>
                   </div>
                 </div>
