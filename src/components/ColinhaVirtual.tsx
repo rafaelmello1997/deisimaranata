@@ -81,7 +81,7 @@ function CaixasNumero({
           inputMode="numeric"
           maxLength={1}
           aria-label={`dígito ${i + 1}`}
-          className="h-14 w-11 rounded-lg border-2 border-bordo/25 text-center text-xl font-extrabold text-tinta outline-none focus:border-bordo disabled:bg-tinta/5 sm:h-16 sm:w-14 sm:text-2xl"
+          className="h-16 w-12 rounded-lg border-2 border-bordo/25 text-center text-2xl font-extrabold text-tinta outline-none focus:border-bordo disabled:bg-tinta/5 sm:h-20 sm:w-16 sm:text-3xl"
         />
       ))}
     </div>
@@ -116,11 +116,11 @@ function CampoBusca({ campo, mapa }: { campo: Campo; mapa: Mapa | null }) {
             <img
               src={`/assets/colinha/fotos/${candidato.sq}.jpg`}
               alt={candidato.nome}
-              className="h-16 w-16 rounded-full border-2 border-bordo/20 object-cover sm:h-20 sm:w-20"
+              className="h-20 w-20 rounded-lg border-2 border-bordo/20 object-cover sm:h-24 sm:w-24"
             />
             <div className="leading-tight">
-              <p className="text-base font-bold text-tinta sm:text-lg">{candidato.nome}</p>
-              <p className="text-xs uppercase tracking-wide text-tinta/45 sm:text-sm">{candidato.partido}</p>
+              <p className="text-lg font-bold text-tinta sm:text-xl">{candidato.nome}</p>
+              <p className="text-sm uppercase tracking-wide text-tinta/45 sm:text-base">{candidato.partido}</p>
             </div>
           </div>
         )}
@@ -216,7 +216,7 @@ export function ColinhaVirtual() {
                       {"20700".split("").map((d, i) => (
                         <span
                           key={i}
-                          className="flex h-14 w-11 items-center justify-center rounded-lg border-2 border-bordo bg-bordo text-xl font-extrabold text-branco sm:h-16 sm:w-14 sm:text-2xl"
+                          className="flex h-16 w-12 items-center justify-center rounded-lg border-2 border-bordo bg-bordo text-2xl font-extrabold text-branco sm:h-20 sm:w-16 sm:text-3xl"
                         >
                           {d}
                         </span>
@@ -226,11 +226,11 @@ export function ColinhaVirtual() {
                       <img
                         src={`/assets/colinha/fotos/${DEISI_SQ}.jpg`}
                         alt="Deisi Maranata"
-                        className="h-16 w-16 rounded-full border-2 border-bordo object-cover sm:h-20 sm:w-20"
+                        className="h-20 w-20 rounded-lg border-2 border-bordo object-cover sm:h-24 sm:w-24"
                       />
                       <div className="leading-tight">
-                        <p className="text-base font-bold text-tinta sm:text-lg">DEISI MARANATA</p>
-                        <p className="text-xs uppercase tracking-wide text-tinta/45 sm:text-sm">PODE</p>
+                        <p className="text-lg font-bold text-tinta sm:text-xl">DEISI MARANATA</p>
+                        <p className="text-sm uppercase tracking-wide text-tinta/45 sm:text-base">PODE</p>
                       </div>
                     </div>
                   </div>
